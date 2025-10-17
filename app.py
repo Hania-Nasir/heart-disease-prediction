@@ -44,9 +44,39 @@ thal = st.selectbox("Thalassemia", options={
 })
 
 if st.button("Predict"):
-    X_input=np.array([[age, sex, cp, trestbps, chol, fbs, restecg,
-                       thalach, exang, oldpeak, slope, ca, thal]])
+    sex_map = {"female": 0, "male": 1}
+    cp_map = {
+        "Typical Angina": 0,
+        "Atypical Angina": 1,
+        "Non-anginal Pain": 2,
+        "Asymptomatic": 3
+    }
+    fbs_map = {"False": 0, "True": 1}
+    restecg_map = {
+        "Normal": 0,
+        "ST-T abnormality": 1,
+        "Left ventricular hypertrophy": 2
+    }
+    exang_map = {"No": 0, "Yes": 1}
+    slope_map = {"Upsloping": 0, "Flat": 1, "Downsloping": 2}
+    thal_map = {"Normal": 0, "Fixed Defect": 1, "Reversible Defect": 2}
 
+    X_input = np.array([[
+        age,
+        sex_map[sex],
+        cp_map[cp],
+        trestbps,
+        chol,
+        fbs_map[fbs],
+        restecg_map[restecg],
+        thalach,
+        exang_map[exang],
+        oldpeak,
+        slope_map[slope],
+        ca,
+        thal_map[thal]
+    ]])
+    
     Prediction=int(model.predict(X_input)[0])
 
     st.subheader("Prediction Result")
